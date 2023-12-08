@@ -182,3 +182,12 @@ CSRF_TRUSTED_ORIGINS = [
 
 CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL')
 CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND')
+CELERY_BEAT_SCHEDULE = {
+    'task-name': {
+        'task': 'habits.tasks.check_user_habit',  # Путь к задаче
+        'schedule': timedelta(minutes=10),  # Расписание выполнения задачи
+    },
+}
+
+TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
+TELEGRAM_URL = os.getenv('TELEGRAM_URL')

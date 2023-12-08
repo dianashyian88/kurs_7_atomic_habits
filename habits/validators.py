@@ -9,7 +9,7 @@ class TimeHabitValidator:
 
     def __call__(self, value):
         tmp_val = dict(value).get(self.field)
-        if tmp_val > 120:
+        if tmp_val is not None and tmp_val > 120:
             raise ValidationError('Временной отрезок не может превышать 120 секунд. '
                                   'В поле time_habit введите значение от 0 до 120 ')
 
