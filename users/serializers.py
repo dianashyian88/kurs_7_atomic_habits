@@ -5,20 +5,16 @@ from users.models import User
 
 class RegistrationSerializer(serializers.ModelSerializer):
     """ Сериализация регистрации пользователя и создания нового. """
-    password = serializers.CharField(
-        max_length=128,
-        min_length=8,
-        write_only=True
-    )
-
-    token = serializers.CharField(max_length=255, read_only=True)
 
     class Meta:
         model = User
-        fields = ['email', 'username', 'phone', 'city', 'telegram_id', 'password', 'token']
-
-    def create(self, validated_data):
-        return User.objects.create_user(**validated_data)
+        fields = ['email',
+                  'username',
+                  'phone',
+                  'city',
+                  'telegram_id',
+                  'password',
+                  'token']
 
 
 class LoginSerializer(serializers.Serializer):
@@ -42,7 +38,8 @@ class LoginSerializer(serializers.Serializer):
         user = authenticate(username=email, password=password)
         if user is None:
             raise serializers.ValidationError(
-                'Пользователь с таким адресом электронной почты и паролем не найден'
+                'Пользователь с таким адресом '
+                'электронной почты и паролем не найден'
             )
         if not user.is_active:
             raise serializers.ValidationError(

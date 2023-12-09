@@ -13,13 +13,17 @@ def check_user_habit():
         if obj.telegram_id is not None:
             now = datetime.datetime.now()
             now = timezone.make_aware(now, timezone.get_current_timezone())
-            now_time = datetime.timedelta(hours=now.hour, minutes=now.minute, seconds=now.second)
-            list_habit = Habit.objects.filter(owner=obj.id, is_enjoy_habit=False)
+            now_time = datetime.timedelta(hours=now.hour,
+                                          minutes=now.minute,
+                                          seconds=now.second)
+            list_habit = Habit.objects.filter(owner=obj.id,
+                                              is_enjoy_habit=False)
             for habit in list_habit:
                 my_bot = MyBot()
-                text = f'Я буду {habit.action} в {habit.time} в/на {habit.place}'
+                text = f'Я буду {habit.action} в {habit.time} в {habit.place}'
                 chat_id = obj.telegram_id
-                habit_time = datetime.timedelta(hours=habit.time.hour, minutes=habit.time.minute,
+                habit_time = datetime.timedelta(hours=habit.time.hour,
+                                                minutes=habit.time.minute,
                                                 seconds=habit.time.second)
                 time_delta = (habit_time - now_time).total_seconds() / 3600
                 if habit.last_reminder is not None:

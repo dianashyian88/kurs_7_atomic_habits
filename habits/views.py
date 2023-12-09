@@ -14,13 +14,15 @@ class RewardViewSet(viewsets.ModelViewSet):
     pagination_class = HabitsPaginator
 
     def perform_create(self, serializer):
-        """Функция сохраняет id пользователя, который создает вознаграждение, в поле owner"""
+        """Функция сохраняет id пользователя,
+        который создает вознаграждение, в поле owner"""
         new_course = serializer.save()
         new_course.owner = self.request.user
         new_course.save()
 
     def list(self, request, *args, **kwargs):
-        """Функция позволяет отфильтровать вознаграждения по пользователю и выводить данные постранично"""
+        """Функция позволяет отфильтровать вознаграждения
+        по пользователю и выводить данные постранично"""
         queryset = Reward.objects.filter(owner=request.user)
         paginated_queryset = self.paginate_queryset(queryset)
         serializer = RewardSerializer(paginated_queryset, many=True)
@@ -33,7 +35,8 @@ class HabitCreateAPIView(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
-        """Функция сохраняет id пользователя, который создает привычку, в поле owner"""
+        """Функция сохраняет id пользователя,
+        который создает привычку, в поле owner"""
         new_habit = serializer.save()
         new_habit.owner = self.request.user
         new_habit.save()
@@ -67,7 +70,8 @@ class HabitListAPIView(generics.ListAPIView):
     pagination_class = HabitsPaginator
 
     def list(self, request, *args, **kwargs):
-        """Функция позволяет отфильтровать привычки по пользователю и выводить данные постранично"""
+        """Функция позволяет отфильтровать привычки
+        по пользователю и выводить данные постранично"""
         queryset = Habit.objects.filter(owner=request.user)
         paginated_queryset = self.paginate_queryset(queryset)
         serializer = HabitSerializer(paginated_queryset, many=True)
